@@ -6,9 +6,9 @@ const Footer = () => {
         <footer className="footer p-10 bg-gray-400 text-neutral-content">
             <div>
                 <img className='w-24 h-24' src={footerImage} alt="" />
-                <p>BuySaler.com<br />Providing reliable tech since 2013</p>
+                <p>BuySalerCKT.com<br />Providing reliable tech since 2013</p>
                 <div className='footer-center p-4 text-white'>
-                    <p>Copyright © 2022 - All right reserved by BuySaler.com</p>
+                    <p>Copyright © 2022 - All right reserved by BuySalerCKT.com</p>
                 </div>
             </div>
             <div>
