@@ -1,15 +1,24 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
 import useTitle from '../../Hooks/useTitle';
 
 
 const Login = () => {
     useTitle('Login')
-    const { register, handleSubmit } = useForm();
+    const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const { signInUser } = useContext(AuthContext);
 
     const handleLogin = data => {
         console.log(data)
+        signInUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+            })
+            .catch(error => console.log(error))
     }
 
 
@@ -24,15 +33,28 @@ const Login = () => {
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <input type="email" {...register("email")} placeholder="Enter Email" className="input input-bordered" />
+                        <input type="email"
+                            {...register("email", { required: "Email is required" })}
+                            placeholder="Enter Email"
+                            className="input input-bordered" />
+                        {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
                     </div>
 
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
-                        <input type="password" {...register("password")} placeholder="Enter Password" className="input input-bordered" />
+                        <input type="password"
+                            {...register("password",
+                                {
+                                    required: "password is required",
+                                    minLength: { value: 6, message: "Password must be six characters long" }
+                                })}
+                            placeholder="Enter Password"
+                            className="input input-bordered" />
+                        {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
+
                     <br />
                     <input className='btn w-full' value="LogIn" type="submit" />
                 </form>

@@ -1,14 +1,23 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthProvider';
 import useTitle from '../../Hooks/useTitle';
 
 const SignUp = () => {
-    useTitle('Login')
-    const { register, handleSubmit } = useForm();
+    useTitle('SignUp')
+    const { register, formState: { errors }, handleSubmit } = useForm();
+
+    const { createUser } = useContext(AuthContext);
 
     const handleLogin = data => {
         console.log(data)
+        createUser(data.email, data.password)
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+            })
+            .catch(error => console.log(error))
     }
     return (
         <div className='h-[800px] flex justify-center items-center'>
@@ -21,32 +30,49 @@ const SignUp = () => {
                         <label className="label">
                             <span className="label-text">Full Name</span>
                         </label>
-                        <input type="text" {...register("name")} placeholder="Enter Full Name" className="input input-bordered" />
+                        <input type="text"
+                            {...register("name",
+                                { required: "Write your full name" })}
+                            placeholder="Enter Full Name"
+                            className="input input-bordered" />
+                        {errors.name && <p className='text-red-600'>{errors.name?.message}</p>}
                     </div>
 
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Email</span>
                         </label>
-                        <input type="email" {...register("email")} placeholder="Enter Email" className="input input-bordered" />
+                        <input type="email"
+                            {...register("email",
+                                { required: 'Email is required' })}
+                            placeholder="Enter Email" className="input input-bordered" />
+                        {errors.email && <p className='text-red-600'>{errors.email?.message}</p>}
                     </div>
 
                     <div className="form-control">
                         <label className="label">
                             <span className="label-text">Password</span>
                         </label>
-                        <input type="password" {...register("password")} placeholder="Enter Password" className="input input-bordered" />
+                        <input type="password"
+                            {...register("password",
+                                {
+                                    required: 'Password is required',
+                                    minLength: { value: 6, message: "Password must be six characters long" }
+                                })}
+                            placeholder="Enter Password" className="input input-bordered" />
+                        {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
 
-                    <div className="form-control">
+                    {/* <div className="form-control">
                         <label className="label">
                             <span className="label-text">Select User Type</span>
                         </label>
-                        <select {...register("category", { required: true })} className="input input-bordered">
+                        <select
+                            {...register("category", { required: true })} className="input input-bordered">
                             <option value='buyer'>Buyer</option>
                             <option value='saler'>Saler</option>
                         </select>
-                    </div>
+                    </div> */}
 
                     <br />
                     <input className='btn w-full' value="signup" type="submit" />
