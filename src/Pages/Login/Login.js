@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { Link } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
@@ -11,14 +11,20 @@ const Login = () => {
 
     const { signInUser } = useContext(AuthContext);
 
+    const [loginError, setLoginError] = useState('');
+
     const handleLogin = data => {
-        console.log(data)
+        console.log(data);
+        setLoginError('');
         signInUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
                 console.log(user)
             })
-            .catch(error => console.log(error))
+            .catch(error => {
+                console.log(error.message)
+                setLoginError(error.message);
+            })
     }
 
 
@@ -53,6 +59,10 @@ const Login = () => {
                             placeholder="Enter Password"
                             className="input input-bordered" />
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
+                    </div>
+
+                    <div>
+                        {loginError && <p className='text-red-600'>{loginError}</p>}
                     </div>
 
                     <br />
