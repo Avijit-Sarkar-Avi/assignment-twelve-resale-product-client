@@ -9,7 +9,7 @@ const Login = () => {
     useTitle('Login')
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { signInUser } = useContext(AuthContext);
+    const { signInUser, googleSignIn } = useContext(AuthContext);
 
     const [loginError, setLoginError] = useState('');
 
@@ -24,6 +24,17 @@ const Login = () => {
             .catch(error => {
                 console.log(error.message)
                 setLoginError(error.message);
+            })
+    }
+
+    const handleGoogleSignIn = () => {
+        googleSignIn()
+            .then(result => {
+                const user = result.user;
+                console.log(user)
+            })
+            .catch(error => {
+                console.log(error)
             })
     }
 
@@ -71,7 +82,7 @@ const Login = () => {
                 <br />
                 <p>Create An Account? <Link className='text-cyan-400' to="/signup">SignUp</Link> </p>
                 <div className='divider'>OR</div>
-                <button className='btn btn-outline w-full'>Continue With GOOGLE</button>
+                <button onClick={handleGoogleSignIn} className='btn btn-outline w-full'>Continue With GOOGLE</button>
             </div>
         </div>
     );

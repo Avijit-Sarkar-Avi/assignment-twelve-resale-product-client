@@ -8,7 +8,7 @@ const SignUp = () => {
     useTitle('SignUp')
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { createUser } = useContext(AuthContext);
+    const { createUser, googleSignIn } = useContext(AuthContext);
 
     const handleLogin = data => {
         console.log(data)
@@ -19,6 +19,16 @@ const SignUp = () => {
             })
             .catch(error => console.log(error))
     }
+
+    const handleGoogleSignUp = () => {
+        googleSignIn()
+            .then(result => {
+                const user = result.user
+                console.log(user)
+            })
+            .catch(error => console.log(error))
+    }
+
     return (
         <div className='h-[800px] flex justify-center items-center'>
             <div className='w-96 p-7'>
@@ -81,7 +91,7 @@ const SignUp = () => {
                 <p>Have An Account? <Link className='text-cyan-400'
                     to="/login">LogIn</Link> </p>
                 <div className='divider'>OR</div>
-                <button className='btn btn-outline w-full'>Continue With GOOGLE</button>
+                <button onClick={handleGoogleSignUp} className='btn btn-outline w-full'>Continue With GOOGLE</button>
             </div>
         </div>
     );
