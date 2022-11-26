@@ -15,7 +15,8 @@ const CategoryDetails = () => {
 
     return (
         <div>
-            Show the category Details
+            <h3 className='text-2xl text-center text-cyan-500'>Circuit Module Name: {product.name}</h3>
+
         </div>
     );
 };

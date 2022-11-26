@@ -5,6 +5,10 @@ import CategoryDetails from "../../Pages/CategoryDetails/CategoryDetails";
 import Home from "../../Pages/Home/Home";
 import Login from "../../Pages/Login/Login";
 import SignUp from "../../Pages/SignUp/SignUp";
+import Dashboard from '../../Pages/Dashboard/Dashboard/Dashboard';
+import DashboardLayout from "../../Layout/DashboardLayout"
+import AllSellers from "../../Pages/Dashboard/AdminDashBoard/AllSellers";
+import AllBuyers from "../../Pages/Dashboard/AdminDashBoard/AllBuyers";
 
 const router = createBrowserRouter([
     {
@@ -35,7 +39,24 @@ const router = createBrowserRouter([
             }
         ])
 
-
+    },
+    {
+        path: '/dashboard',
+        element: <DashboardLayout></DashboardLayout>,
+        children: [
+            {
+                path: '/dashboard',
+                element: <Dashboard></Dashboard>
+            },
+            {
+                path: '/dashboard/sellers',
+                element: <AllSellers></AllSellers>
+            },
+            {
+                path: '/dashboard/buyers',
+                element: <AllBuyers></AllBuyers>
+            }
+        ]
     }
 ])
 

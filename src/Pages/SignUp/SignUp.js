@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
-import { Link } from 'react-router-dom';
+import toast from 'react-hot-toast';
+import { Link, useNavigate } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthProvider';
 import useTitle from '../../Hooks/useTitle';
 
@@ -8,13 +9,27 @@ const SignUp = () => {
     useTitle('SignUp')
     const { register, formState: { errors }, handleSubmit } = useForm();
 
-    const { createUser, googleSignIn } = useContext(AuthContext);
+    // const [createdUserEmail, setCreatedUserEmail] = useState('');
+
+    const { createUser, googleSignIn, updateUser } = useContext(AuthContext);
+
+    const navigate = useNavigate();
 
     const handleLogin = data => {
         console.log(data)
         createUser(data.email, data.password)
             .then(result => {
                 const user = result.user;
+                toast('SignUp successfully');
+
+                const userInfo = { displayName: data.name }
+
+                updateUser(userInfo)
+                    .then(() => {
+                        saveUser(data.name, data.email)
+                    })
+                    .catch(error => console.log(error))
+
                 console.log(user)
             })
             .catch(error => console.log(error))
@@ -27,6 +42,35 @@ const SignUp = () => {
                 console.log(user)
             })
             .catch(error => console.log(error))
+    }
+
+    const saveUser = (name, email) => {
+        const user = { name, email };
+        fetch('http://localhost:5000/users', {
+            method: 'POST',
+            headers: {
+                'content-type': 'application/json'
+            },
+            body: JSON.stringify(user)
+        })
+            .then(res => res.json)
+            .then(data => {
+                getUserToken(email);
+
+                // setCreatedUserEmail(email);
+
+            })
+    }
+
+    const getUserToken = email => {
+        fetch(`http://localhost:5000/jwt?email=${email}`)
+            .then(res => res.json())
+            .then(data => {
+                if (data.accessToken) {
+                    localStorage.setItem('accessToken', data.accessToken);
+                    navigate('/');
+                }
+            })
     }
 
     return (
@@ -73,7 +117,7 @@ const SignUp = () => {
                         {errors.password && <p className='text-red-600'>{errors.password?.message}</p>}
                     </div>
 
-                    {/* <div className="form-control">
+                    <div className="form-control">
                         <label className="label">
                             <span className="label-text">Select User Type</span>
                         </label>
@@ -82,7 +126,7 @@ const SignUp = () => {
                             <option value='buyer'>Buyer</option>
                             <option value='saler'>Saler</option>
                         </select>
-                    </div> */}
+                    </div>
 
                     <br />
                     <input className='btn w-full' value="signup" type="submit" />
