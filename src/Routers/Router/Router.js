@@ -9,6 +9,15 @@ import Dashboard from '../../Pages/Dashboard/Dashboard/Dashboard';
 import DashboardLayout from "../../Layout/DashboardLayout"
 import AllSellers from "../../Pages/Dashboard/AdminDashBoard/AllSellers";
 import AllBuyers from "../../Pages/Dashboard/AdminDashBoard/AllBuyers";
+import PrivateRoute from "../PrivateRoute/PrivateRoute";
+import AdminRoute from "../AdminRoute/AdminRoute";
+import ReportedItems from "../../Pages/Dashboard/AdminDashBoard/ReportedItems";
+import SellerRoute from "../SellerRoute/SellerRoute";
+import AddAProduct from "../../Pages/Dashboard/SellerDashBoard/AddAProduct";
+import MyPorducts from "../../Pages/Dashboard/SellerDashBoard/MyPorducts";
+import MyBuyers from "../../Pages/Dashboard/SellerDashBoard/MyBuyers";
+import BuyerRoute from "../BuyerRoute/BuyerRoute";
+import MyOrders from "../../Pages/Dashboard/BuyerDashBoard/MyOrders";
 
 const router = createBrowserRouter([
     {
@@ -42,7 +51,7 @@ const router = createBrowserRouter([
     },
     {
         path: '/dashboard',
-        element: <DashboardLayout></DashboardLayout>,
+        element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
         children: [
             {
                 path: '/dashboard',
@@ -50,11 +59,31 @@ const router = createBrowserRouter([
             },
             {
                 path: '/dashboard/sellers',
-                element: <AllSellers></AllSellers>
+                element: <AdminRoute><AllSellers></AllSellers></AdminRoute>
             },
             {
                 path: '/dashboard/buyers',
-                element: <AllBuyers></AllBuyers>
+                element: <AdminRoute><AllBuyers></AllBuyers></AdminRoute>
+            },
+            {
+                path: '/dashboard/reportedItems',
+                element: <AdminRoute><ReportedItems></ReportedItems></AdminRoute>
+            },
+            {
+                path: '/dashboard/addProduct',
+                element: <SellerRoute><AddAProduct></AddAProduct></SellerRoute>
+            },
+            {
+                path: '/dashboard/myProducts',
+                element: <SellerRoute> <MyPorducts></MyPorducts> </SellerRoute>
+            },
+            {
+                path: '/dashboard/myBuyers',
+                element: <SellerRoute> <MyBuyers></MyBuyers> </SellerRoute>
+            },
+            {
+                path: '/dashboard/myOrders',
+                element: <BuyerRoute> <MyOrders></MyOrders> </BuyerRoute>
             }
         ]
     }
