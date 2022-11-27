@@ -16,8 +16,8 @@ const SignUp = () => {
     const navigate = useNavigate();
 
     const handleLogin = data => {
-        console.log(data)
-        createUser(data.email, data.password)
+        console.log(data.category)
+        createUser(data.email, data.password, data.category)
             .then(result => {
                 const user = result.user;
                 toast('SignUp successfully');
@@ -26,7 +26,7 @@ const SignUp = () => {
 
                 updateUser(userInfo)
                     .then(() => {
-                        saveUser(data.name, data.email)
+                        saveUser(data.name, data.email, data.category)
                     })
                     .catch(error => console.log(error))
 
@@ -44,8 +44,8 @@ const SignUp = () => {
             .catch(error => console.log(error))
     }
 
-    const saveUser = (name, email) => {
-        const user = { name, email };
+    const saveUser = (name, email, category) => {
+        const user = { name, email, category };
         fetch('http://localhost:5000/users', {
             method: 'POST',
             headers: {
