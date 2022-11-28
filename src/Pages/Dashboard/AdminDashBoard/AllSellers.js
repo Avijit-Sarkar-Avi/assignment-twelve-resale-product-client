@@ -26,6 +26,20 @@ const AllSellers = () => {
             })
     }
 
+    const handleDeleteSeller = email => {
+        fetch(`http://localhost:5000/users/seller/${email}`, {
+            method: 'DELETE',
+        })
+            .then(res => res.json())
+            .then(data => {
+                console.log(data);
+                if (data.deletedCount > 0) {
+                    refetch();
+                    toast.error(`deleted successfully`);
+                }
+            })
+    }
+
     return (
         <div>
             <h2 className='text-2xl'>All Seller</h2>
@@ -53,7 +67,11 @@ const AllSellers = () => {
                                         onClick={() => handleVerifiedSeller(user._id)}
                                         className='btn btn-xs btn-accent'>
                                         Verified</button>}</td>
-                                    <td><button className='btn btn-xs btn-error'>Delete</button></td>
+
+                                    <td><button
+                                        onClick={() => handleDeleteSeller(user.email)}
+                                        className='btn btn-xs btn-error'>Delete
+                                    </button></td>
                                 </tr>
                             )
                         }
