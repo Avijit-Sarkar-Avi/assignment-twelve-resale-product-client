@@ -1,16 +1,23 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
+import toast from 'react-hot-toast';
+import { useNavigate } from 'react-router-dom';
+import { AuthContext } from '../../../Context/AuthProvider';
 import useTitle from '../../../Hooks/useTitle';
 
 const AddAProduct = () => {
 
     useTitle('Add A Product')
 
+    const { user } = useContext(AuthContext);
+
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const imageHostKey = process.env.REACT_APP_imgbb_key;
     console.log(imageHostKey)
+
+    const navigate = useNavigate()
 
     const { data: categories, isLoading } = useQuery({
 
@@ -27,7 +34,7 @@ const AddAProduct = () => {
         const image = data.image[0];
         const formData = new FormData();
         formData.append('image', image);
-        const url = `https://api.imgbb.com/1/upload?expiration=600&key=${imageHostKey}`
+        const url = `https://api.imgbb.com/1/upload?key=${imageHostKey}`
         fetch(url, {
             method: 'POST',
             body: formData
@@ -46,7 +53,8 @@ const AddAProduct = () => {
                         orginalPrice: data.orginalPrice,
                         year: data.year,
                         description: data.description,
-                        image: imgData.data.url
+                        image: imgData.data.url,
+                        email: user.email
                     }
                     //save product information
 
@@ -61,6 +69,8 @@ const AddAProduct = () => {
                         .then(res => res.json())
                         .then(result => {
                             console.log(result);
+                            toast.success(`${data.name} product added successfully`)
+                            navigate('/dashboard/myProducts')
                         })
                 }
             })
@@ -121,6 +131,7 @@ const AddAProduct = () => {
                         {...register("condition", { required: true })} className="input input-bordered">
                         <option value='excellent'>Excellent</option>
                         <option value='good'>Good</option>
+                        <option value='fair'>Fair</option>
                     </select>
                 </div>
 
