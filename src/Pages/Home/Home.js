@@ -27,6 +27,8 @@ const Home = () => {
                 <Categories></Categories>
             </div>
 
+
+
             <div className="hero ">
                 <div className="hero-content flex-col lg:flex-row">
                     <img src={stripeImage} alt="" className="lg:h-52 lg:w-96 rounded-lg shadow-2xl" />
