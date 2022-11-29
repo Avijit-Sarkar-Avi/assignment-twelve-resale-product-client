@@ -50,6 +50,7 @@ const AddAProduct = () => {
                         condition: data.condition,
                         location: data.location,
                         category: data.category,
+                        // categoryId: categories.id,
                         orginalPrice: data.orginalPrice,
                         year: data.year,
                         description: data.description,
