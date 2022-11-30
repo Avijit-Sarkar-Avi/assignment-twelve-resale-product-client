@@ -6,7 +6,7 @@ const MyProductsCard = ({ product }) => {
     const { product: productName, image, resalePrice, category, _id } = product;
 
     const handleAdvertise = _id => {
-        fetch(`http://localhost:5000/products/${_id}`, {
+        fetch(`https://server-phi-three.vercel.app/products/${_id}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -18,7 +18,7 @@ const MyProductsCard = ({ product }) => {
     }
 
     const handleDeleteProduct = _id => {
-        fetch(`http://localhost:5000/products/${_id}`, {
+        fetch(`https://server-phi-three.vercel.app/products/${_id}`, {
             method: 'DELETE',
         })
             .then(res => res.json())

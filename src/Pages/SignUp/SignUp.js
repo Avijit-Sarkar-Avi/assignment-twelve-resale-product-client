@@ -46,7 +46,7 @@ const SignUp = () => {
 
     const saveUser = (name, email, category) => {
         const user = { name, email, category };
-        fetch('http://localhost:5000/users', {
+        fetch('https://server-phi-three.vercel.app/users', {
             method: 'POST',
             headers: {
                 'content-type': 'application/json'
@@ -63,7 +63,7 @@ const SignUp = () => {
     }
 
     const getUserToken = email => {
-        fetch(`http://localhost:5000/jwt?email=${email}`)
+        fetch(`https://server-phi-three.vercel.app/jwt?email=${email}`)
             .then(res => res.json())
             .then(data => {
                 if (data.accessToken) {

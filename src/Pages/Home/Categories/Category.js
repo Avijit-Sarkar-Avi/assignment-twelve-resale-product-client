@@ -5,7 +5,7 @@ const Category = ({ card }) => {
     const { name, description, icon, _id } = card;
     return (
         <div>
-            <Link to={`/category/${_id}`}>
+            <Link to={`/category/${name}`}>
                 <div className="card card-side px-6 bg-base-100 shadow-xl lg:h-44">
                     <figure><img src={icon} alt="Movie" className='lg:w-96 lg:h-20' /></figure>
                     <div className="card-body">

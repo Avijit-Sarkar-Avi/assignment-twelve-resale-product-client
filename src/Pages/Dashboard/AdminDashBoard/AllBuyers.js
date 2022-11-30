@@ -8,14 +8,14 @@ const AllBuyers = () => {
         queryKey: ['users'],
 
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users?category=buyer');
+            const res = await fetch('https://server-phi-three.vercel.app/users?category=buyer');
             const data = await res.json();
             return data
         }
     })
 
     const handleDeleteBuyer = email => {
-        fetch(`http://localhost:5000/users/buyer/${email}`, {
+        fetch(`https://server-phi-three.vercel.app/users/buyer/${email}`, {
             method: 'DELETE',
         })
             .then(res => res.json())

@@ -7,14 +7,14 @@ const AllSellers = () => {
         queryKey: ['users'],
 
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/users?category=saler');
+            const res = await fetch('https://server-phi-three.vercel.app/users?category=saler');
             const data = await res.json();
             return data
         }
     });
 
     const handleVerifiedSeller = id => {
-        fetch(`http://localhost:5000/users/verify/${id}`, {
+        fetch(`https://server-phi-three.vercel.app/users/verify/${id}`, {
             method: 'PUT'
         })
             .then(res => res.json())
@@ -27,7 +27,7 @@ const AllSellers = () => {
     }
 
     const handleDeleteSeller = email => {
-        fetch(`http://localhost:5000/users/seller/${email}`, {
+        fetch(`https://server-phi-three.vercel.app/users/seller/${email}`, {
             method: 'DELETE',
         })
             .then(res => res.json())

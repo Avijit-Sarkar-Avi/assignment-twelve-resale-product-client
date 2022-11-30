@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useForm } from 'react-hook-form';
 import toast from 'react-hot-toast';
 import { useNavigate } from 'react-router-dom';
@@ -12,6 +12,8 @@ const AddAProduct = () => {
 
     const { user } = useContext(AuthContext);
 
+    const [productAddDate, setproductAddDate] = useState(new Date());
+
     const { register, formState: { errors }, handleSubmit } = useForm();
 
     const imageHostKey = process.env.REACT_APP_imgbb_key;
@@ -23,7 +25,7 @@ const AddAProduct = () => {
 
         queryKey: ['category'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/category')
+            const res = await fetch('https://server-phi-three.vercel.app/category')
             const data = await res.json();
             return data;
         }
@@ -50,16 +52,17 @@ const AddAProduct = () => {
                         condition: data.condition,
                         location: data.location,
                         category: data.category,
-                        // categoryId: categories.id,
                         orginalPrice: data.orginalPrice,
                         year: data.year,
                         description: data.description,
                         image: imgData.data.url,
-                        email: user.email
+                        email: user.email,
+                        userName: user.displayName,
+                        addedDate: productAddDate,
                     }
                     //save product information
 
-                    fetch('http://localhost:5000/products', {
+                    fetch('https://server-phi-three.vercel.app/products', {
                         method: 'POST',
                         headers: {
                             'content-type': 'application/json',
@@ -177,7 +180,7 @@ const AddAProduct = () => {
 
                 <div className="form-control">
                     <label className="label">
-                        <span className="label-text">Year of purchase</span>
+                        <span className="label-text">Year of Use</span>
                     </label>
                     <input type="text"
                         {...register("year",

@@ -3,6 +3,7 @@ import useTitle from '../../Hooks/useTitle';
 import bannerImage from '../../asset/banner.jpg'
 import stripeImage from '../../asset/stripe.jpg'
 import Categories from './Categories/Categories';
+import Advertise from './Advertise/Advertise';
 
 const Home = () => {
     useTitle('Home')
@@ -27,6 +28,11 @@ const Home = () => {
                 <Categories></Categories>
             </div>
 
+            <div className='m-20'>
+                <h2 className='text-2xl text-center font-bold text-green-700'>Advertise Items:</h2>
+                <br />
+                <Advertise></Advertise>
+            </div>
 
 
             <div className="hero ">

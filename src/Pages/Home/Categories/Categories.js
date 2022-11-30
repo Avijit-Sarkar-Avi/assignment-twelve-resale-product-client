@@ -9,14 +9,14 @@ const Categories = () => {
     const { data: cardData = [] } = useQuery({
         queryKey: ['cardData'],
         queryFn: async () => {
-            const res = await fetch('http://localhost:5000/cardData');
+            const res = await fetch('https://server-phi-three.vercel.app/cardData');
             const data = await res.json();
             return data
         }
     })
 
     // useEffect(() => {
-    //     fetch('http://localhost:5000/cardData')
+    //     fetch('https://server-phi-three.vercel.app/cardData')
     //         .then(res => res.json())
     //         .then(data => setCardData(data))
     // }, [])

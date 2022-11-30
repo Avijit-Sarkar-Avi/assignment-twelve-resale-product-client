@@ -18,21 +18,23 @@ import MyPorducts from "../../Pages/Dashboard/SellerDashBoard/MyPorducts";
 import MyBuyers from "../../Pages/Dashboard/SellerDashBoard/MyBuyers";
 import BuyerRoute from "../BuyerRoute/BuyerRoute";
 import MyOrders from "../../Pages/Dashboard/BuyerDashBoard/MyOrders";
+import DisplayError from "../../Pages/Shared/DisplayError/DisplayError";
 
 const router = createBrowserRouter([
     {
         path: '/',
         element: <Main></Main>,
+        errorElement: <DisplayError></DisplayError>,
         children: ([
             {
                 path: '/',
                 element: <Home></Home>
             },
             {
-                path: '/category/:id',
-                element: <CategoryDetails></CategoryDetails>,
-                loader: ({ params }) =>
-                    fetch(`http://localhost:5000/cardData/${params.id}`)
+                path: '/category/:name',
+                element: <PrivateRoute><CategoryDetails></CategoryDetails></PrivateRoute>
+                // loader: ({ params }) =>
+                //     fetch(`https://server-phi-three.vercel.app/cardData/${params.name}`)
             },
             {
                 path: '/blog',
@@ -52,6 +54,7 @@ const router = createBrowserRouter([
     {
         path: '/dashboard',
         element: <PrivateRoute><DashboardLayout></DashboardLayout></PrivateRoute>,
+        errorElement: <DisplayError></DisplayError>,
         children: [
             {
                 path: '/dashboard',
